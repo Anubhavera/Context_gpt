@@ -1,0 +1,20 @@
+{
+    "manifest_version": 3,
+    "name": "ChatGPT Context Menu",
+    "description": "Explain content with ChatGPT",
+    "version": "1.0",
+    "permissions": ["contextMenus", "activeTab"],
+    "background": {
+      "service_worker": "background.js"
+    },
+    "action": {
+      "default_popup": "popup.html",
+      "default_title": "ChatGPT Context Menu"
+    },
+    "icons": {
+        "16": "16.png",
+        "48": "48.png",
+        "128": "128.jpeg"
+  }
+}
+  

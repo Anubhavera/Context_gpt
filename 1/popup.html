@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>ChatGPT Chrome Extension</title>
+    <script src="background.js"></script>
+    <style>
+    /* Style the chat window */
+#chat-window {
+  height: 400px;
+  width: 100%;
+  background-color: #f2f2f2;
+  overflow-y: scroll;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+/* Style the chat messages */
+.chat-message {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+.user-message {
+  align-self: flex-end;
+  background-color: #4CAF50;
+  color: white;
+  border-radius: 10px 0px 10px 10px;
+  padding: 10px;
+  max-width: 50%;
+}
+.bot-message {
+  align-self: flex-start;
+  background-color: #f2f2f2;
+  color: black;
+  border-radius: 0px 10px 10px 10px;
+  padding: 10px;
+  max-width: 50%;
+}
+
+/* Style the chat input form */
+#chat-form {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 10px;
+}
+#chat-input {
+  flex-grow: 1;
+  margin-right: 10px;
+  padding: 10px;
+  box-sizing: border-box;
+}
+#chat-submit {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.2s ease-in-out;
+}
+#chat-submit:hover {
+  background-color: #3e8e41;
+}
+
+/* Add any additional custom styles here */
+
+    </style>
+  </head>
+  <body>
+    <div id="chat-window">
+      <!-- The chat messages will be displayed here -->
+    </div>
+    <form id="chat-form">
+      <input type="text" id="chat-input" placeholder="Type your message here...">
+      <button type="submit" id="chat-submit">Send</button>
+    </form>
+    <script src="https://cdn.jsdelivr.net/npm/@openai/chat-1.0.0.min.js"></script>
+    <script>
+      const chat = new OpenAIChat({
+        // Add your ChatGPT API credentials here
+        instance: 'CHAT DCP',
+        apiKey: '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'
+      });
+      
+      const chatWindow = document.getElementById('chat-window');
+      const chatForm = document.getElementById('chat-form');
+      const chatInput = document.getElementById('chat-input');
+      const chatSubmit = document.getElementById('chat-submit');
+      
+      // Event listener for form submission
+      chatForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const userInput = chatInput.value;
+        chatInput.value = '';
+        chat.addUserMessage(userInput);
+        chat.send(userInput).then((response) => {
+          chat.addBotMessage(response.data[0].text);
+        }).catch((error) => {
+          console.error(error);
+        });
+      });
+    </script>
+  </body>
+</html>
